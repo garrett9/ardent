@@ -1,59 +1,34 @@
 Ardent
 ======
 
-[![Latest Stable Version](https://poser.pugx.org/laravelbook/ardent/v/stable.svg)](https://packagist.org/packages/laravelbook/ardent)
-[![License](https://poser.pugx.org/laravelbook/ardent/license.svg)](https://packagist.org/packages/laravelbook/ardent)
-[![Total Downloads](https://poser.pugx.org/laravelbook/ardent/downloads.svg)](https://packagist.org/packages/laravelbook/ardent)
-[![Monthly Downloads](https://poser.pugx.org/laravelbook/ardent/d/monthly.png)](https://packagist.org/packages/laravelbook/ardent)
-[![Daily Downloads](https://poser.pugx.org/laravelbook/ardent/d/daily.png)](https://packagist.org/packages/laravelbook/ardent)
-
-
-Self-validating smart models for Laravel Framework 4's Eloquent ORM.
+Self-validating smart models for Laravel Framework 5's Eloquent ORM.
 
 Based on the Aware bundle for Laravel 3 by Colby Rabideau.
 
 Copyright (C) 2013-2015 [Max Ehsan](http://laravelbook.com/) & [Igor Santos](http://www.igorsantos.com.br)
 
-## Changelog
-
-Visit our [Releases list](https://github.com/laravelbook/ardent/releases). The changelog is made there :)
-
 ## Installation
 
-Add `laravelbook/ardent` as a requirement to `composer.json` (see our latest stable version on the badges!):
+Add `dfsainc/ardent` as a requirement to `composer.json`.
 
 ```javascript
 {
     "require": {
-        "laravelbook/ardent": "2.*"
+        "dfsainc/ardent": "2.*"
     }
 }
 ```
 
-Update your packages with `composer update` or install with `composer install`.
+Also, add a repositories field in your composer.json field.
 
-You can also add the package using `composer require laravelbook/ardent` and later specifying the version you want (for now, `dev-master` is your best bet).
-
-### Usage outside of Laravel (since [1.1](https://github.com/laravelbook/ardent/tree/v1.1.0))
-
-If you're willing to use Ardent as a standalone ORM package you're invited to do so by using the
-following configuration line in your project's boot/startup file (changing the properties according
-to your database, obviously):
-
-```php
-\LaravelBook\Ardent\Ardent::configureAsExternal(array(
-  'driver'    => 'mysql',
-  'host'      => 'localhost',
-  'port'      => 3306,
-  'database'  => 'my_system',
-  'username'  => 'myself',
-  'password'  => 'h4ckr',
-  'charset'   => 'utf8',
-  'collation' => 'utf8_unicode_ci'
-), 'en'); //English is the default messages language, may be left empty
+```json
+"repositories": [
+    {
+        "type": "git",
+    	"url": "https://github.com/dfsainc/ardent"
+    }
+]
 ```
-
-------------------------------------------------------------------------------------------------------------
 
 ## Documentation
 
