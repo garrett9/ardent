@@ -13,7 +13,7 @@
     },
     "autoload": {
         "psr-0": {
-            "DFSAInc\\Ardent": "src/"
+            "LaravelBook\\Ardent": "src/"
         }
     },
     "minimum-stability": "dev"
