@@ -249,6 +249,15 @@ abstract class Ardent extends Model {
         }
     }
 
+	/**
+	 * Statically get the table name of the class.
+	 * 
+	 * @return string
+	 */
+	public static function table() {
+		return with(new static)->getTable();
+	}
+
 	public function getObservableEvents() {
 		return array_merge(
 			parent::getObservableEvents(),
