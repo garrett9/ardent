@@ -36,7 +36,7 @@ abstract class Ardent extends Model {
      *
      * @var array
      */
-    public static $rules = array();
+    protected $rules = array();
 
     /**
      * The array of custom error messages.
@@ -247,6 +247,15 @@ abstract class Ardent extends Model {
                 }
             }
         }
+    }
+    
+    /**
+     * Return the validation rules for the model.
+     * 
+     * @return array
+     */
+    public function rules() {
+        return $this->rules;
     }
 
 	/**
@@ -551,7 +560,7 @@ abstract class Ardent extends Model {
         }
 
         // check for overrides, then remove any empty rules
-        $rules = (empty($rules))? static::$rules : $rules;
+        $rules = (empty($rules))? $this->rules : $rules;
         foreach ($rules as $field => $rls) {
             if ($rls == '') {
                 unset($rules[$field]);
@@ -816,7 +825,7 @@ abstract class Ardent extends Model {
     protected function buildUniqueExclusionRules(array $rules = array()) {
       
         if (!count($rules))
-          $rules = static::$rules;
+          $rules = $this->rules;
 
         foreach ($rules as $field => &$ruleset) {
             // If $ruleset is a pipe-separated string, switch it to array
