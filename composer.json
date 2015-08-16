@@ -1,5 +1,5 @@
 {
-    "name": "dfsainc/ardent",
+    "name": "garrett9/ardent",
     "description": "Self-validating smart models for Laravel 5's Eloquent O/RM",
     "keywords": ["validation", "laravel", "framework", "eloquent", "database", "sql", "orm", "activerecord", "active record"],
     "type": "library",
