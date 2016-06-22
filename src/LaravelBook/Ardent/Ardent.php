@@ -139,6 +139,20 @@ abstract class Ardent extends Model {
      * @var \Illuminate\Validation\Factory
      */
     protected static $validationFactory;
+    
+    /**
+     * The column to order all results from all queries of this model by default. If left blank, the results will not be ordered.
+     * 
+     * @var string
+     */
+    protected $orderBy;
+    
+    /**
+     * If the $orderBy property is set, this property determines how the results are ordered (asc, desc).
+     * 
+     * @var string
+     */
+    protected $orderDirection = 'asc';
 
     /**
      * Can be used to ease declaration of relationships in Ardent models.
@@ -257,7 +271,22 @@ abstract class Ardent extends Model {
     public function rules() {
         return $this->rules;
     }
-
+    
+    /**
+     * Returns all attributes in the model that match the keys given in the input array.
+     * 
+     * @param array $array
+     */
+    public function getAttributesFromArray(array $keys=[]) 
+    {
+        $values = [];
+        foreach($keys as $key) {
+            if(isset($this->attributes[$key]))
+                $values[$key] = $this->attributes[$key];
+        }
+        return $values;
+    }
+    
 	/**
 	 * Statically get the table name of the class.
 	 * 
@@ -346,17 +375,20 @@ abstract class Ardent extends Model {
 
         switch ($relationType) {
             case self::HAS_ONE:
+                $verifyArgs(['foreignKey', 'localKey']);
+                return $this->$relationType($relation[1], $relation['foreignKey'], $relation['localKey']);
+                
             case self::HAS_MANY:
                 $verifyArgs(['foreignKey', 'localKey']);
-                return $this->$relationType($relation[1], $relation['foreignKey'], $relationName);
+                return $this->$relationType($relation[1], $relation['foreignKey'], $relation['localKey']);
 
             case self::HAS_MANY_THROUGH:
                 $verifyArgs(['firstKey', 'secondKey'], ['through']);
                 return $this->$relationType($relation[1], $relation['through'], $relation['firstKey'], $relation['secondKey']);
 
             case self::BELONGS_TO:
-                $verifyArgs(['foreignKey', 'otherKey', 'relation']);
-                return $this->$relationType($relation[1], $relation['foreignKey'], $relation['otherKey'], $relation['relation']);
+                $verifyArgs(['foreignKey', 'otherKey']);
+                return $this->$relationType($relation[1], $relation['foreignKey'], $relation['otherKey'], $relationName);
 
             case self::BELONGS_TO_MANY:
                 $verifyArgs(['table', 'foreignKey', 'otherKey', 'relation']);
@@ -370,8 +402,8 @@ abstract class Ardent extends Model {
                 return $relationship;
 
             case self::MORPH_TO:
-                $verifyArgs(['name', 'type', 'id']);
-                return $this->$relationType($relation['name'], $relation['type'], $relation['id']);
+                $verifyArgs(['type', 'id']);
+                return $this->$relationType($relationName, $relation['type'], $relation['id']);
 
             case self::MORPH_ONE:
             case self::MORPH_MANY:
@@ -850,6 +882,9 @@ abstract class Ardent extends Model {
 		// builder can easily access any information it may need from the model
 		// while it is constructing and executing various queries against it.
 		$builder->setModel($this)->with($this->with);
+		
+		if(!empty($this->orderBy))
+		    $builder->orderBy($this->orderBy, $this->orderDirection);
 
 		return $this->applyGlobalScopes($builder);
 	}
