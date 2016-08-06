@@ -264,6 +264,19 @@ abstract class Ardent extends Model {
     }
     
     /**
+     * Fills a model safely be checking if the model has any fillable attributes first.
+     * 
+     * @param array $data The data to fill the model with.
+     * @return Ardent The current model.
+     */
+    public function safeFill(array $data = [])
+    {
+    	if(count($this->getFillable()) > 0)
+    		$model->fill($data);
+    	return $model;
+    }
+    
+    /**
      * Return the validation rules for the model.
      * 
      * @return array
