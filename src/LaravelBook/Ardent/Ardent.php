@@ -880,27 +880,6 @@ abstract class Ardent extends Model {
 		return $this->validate($rules, $customMessages);
 	}
 
-	/**
-	 * Get a new query builder for the model's table.
-	 * Overriden from {@link \Model\Eloquent} to allow for usage of {@link throwOnFind}.
-	 *
-	 * @param  bool  $excludeDeleted
-	 * @return \Illuminate\Database\Eloquent\Builder
-	 */
-	public function newQuery($excludeDeleted = true) {
-		$builder = new Builder($this->newBaseQueryBuilder());
-		$builder->throwOnFind = static::$throwOnFind;
-
-		// Once we have the query builders, we will set the model instances so the
-		// builder can easily access any information it may need from the model
-		// while it is constructing and executing various queries against it.
-		$builder->setModel($this)->with($this->with);
-		
-		if(!empty($this->orderBy))
-		    $builder->orderBy($this->orderBy, $this->orderDirection);
-
-		return $this->applyGlobalScopes($builder);
-	}
 
     /**
      * Returns the validator object created after {@link validate()}.
