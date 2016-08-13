@@ -272,8 +272,8 @@ abstract class Ardent extends Model {
     public function safeFill(array $data = [])
     {
     	if(count($this->getFillable()) > 0)
-    		$model->fill($data);
-    	return $model;
+    		$this->fill($data);
+    	return $this;
     }
     
     /**
